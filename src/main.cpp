@@ -1,10 +1,17 @@
 #include <Arduino.h>
 
-HardwareSerial MySerial(PA8,PA9);
+HardwareSerial MySerial(PA10,PA9);
+
+static int a = 0;
 
 void setup() {
+  MySerial.begin(115200);
+  MySerial.println("setup");
+  MySerial.setTimeout(2);
   pinMode(PA1, OUTPUT);
+  pinMode(PC13, OUTPUT);
   digitalWrite(PA1,HIGH);
+  digitalWrite(PC13,HIGH);
 }
 
 void loop() {
@@ -13,10 +20,10 @@ void loop() {
   delay(500);
   digitalWrite(PA1,HIGH);
   delay(500);
-  MySerial.println("loop");
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  digitalWrite(PC13,LOW);
+  delay(500);
+  digitalWrite(PC13,HIGH);
+  delay(500);
+  MySerial.print("loop ");
+  MySerial.println(a++);
 }
